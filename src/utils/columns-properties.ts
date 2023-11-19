@@ -1,9 +1,28 @@
-import {
-  GridColDef,
-  GridColumnGroupingModel,
-} from "@mui/x-data-grid";
+import { GridColDef, GridColumnGroupingModel } from "@mui/x-data-grid";
 
 import { destruct } from ".";
+
+
+
+export const columnsProps = (permissionsArray: string[]) => {
+  let columnsProps: GridColDef[] = [];
+
+  for (let i = 0; i <= permissionsArray.length - 1; i++) {
+    const { entity, permission } = destruct(permissionsArray[i]);
+
+    columnsProps.push({
+      field       : entity + permission.toLowerCase(),
+      headerName  : permission,
+      description : permissionsArray[i],
+      width       : 180,
+      sortable    : false,
+    });
+  }
+
+  return columnsProps;
+};
+
+
 
 export const columnsModelProperties = (permissionsArray: string[]) => {
   let columnsModelProps: GridColumnGroupingModel = [];
@@ -14,7 +33,8 @@ export const columnsModelProperties = (permissionsArray: string[]) => {
     let index = columnsModelProps.findIndex(
       (prop) => prop.groupId === entity.toLowerCase()
     );
-    if (index !== -1) {                   //-1 indica que no encontro el indice
+    if (index !== -1) {
+      //-1 indica que no encontro el indice
       columnsModelProps[index].children.push({
         field: permission.toLowerCase(),
       });
@@ -28,22 +48,4 @@ export const columnsModelProperties = (permissionsArray: string[]) => {
   }
 
   return columnsModelProps;
-};
-
-export const columnsProps = (permissionsArray: string[]) => {
-  let columnsProps: GridColDef[] = [];
-
-  for (let i = 0; i <= permissionsArray.length - 1; i++) {
-    const { entity, permission } = destruct(permissionsArray[i]);
-
-    columnsProps.push({
-      field: entity + permission.toLowerCase(),
-      headerName: permission,
-      width: 180,
-      sortable: false,
-      description: entity + ':' + permission
-    });
-  }
-
-  return columnsProps;
 };

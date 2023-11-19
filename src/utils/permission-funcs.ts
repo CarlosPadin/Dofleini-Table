@@ -1,11 +1,13 @@
-import { IRole } from "../interfaces";
 import { destruct } from "./destruct";
+import { IRole } from "../interfaces";
 
 export const deletePermissionsRow = (id: string, roles: IRole[]) => {
+
   const role = roles.find((role) => role.id === id);
   if (role) {
     role.permissions = [];
   }
+  
   return [...roles];
 };
 
@@ -44,6 +46,6 @@ export const grantPermissionsCol = (roles: IRole[], desc: string) => {
     role.permissions.push(desc);
     return role;
   });
-  
+
   return updtRoles;
 };

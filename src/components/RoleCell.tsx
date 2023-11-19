@@ -2,11 +2,10 @@ import { useState } from "react";
 
 import { Block, DeleteOutline, HowToReg } from "@mui/icons-material";
 import {
-  Checkbox,
+  capitalize,
   IconButton,
   Tooltip,
   Typography,
-  capitalize,
 } from "@mui/material";
 
 import { IRole } from "../interfaces";
@@ -51,15 +50,24 @@ const RoleCell = ({
   return (
     <>
       <Typography variant="body1">{capitalize(roleName)}</Typography>
-      <IconButton onClick={onGrantPermissionsRow}>
-        <HowToReg fontSize="small" />
-      </IconButton>
-      <IconButton onClick={onDeletePermissionsRow}>
-        <Block fontSize="small" />
-      </IconButton>
-      <IconButton onClick={onDeleteRole}>
-        <DeleteOutline fontSize="small" />
-      </IconButton>
+
+      <Tooltip title='Dar Permisos'>
+        <IconButton onClick={onGrantPermissionsRow}>
+          <HowToReg fontSize="small" />
+        </IconButton>
+      </Tooltip>
+
+      <Tooltip title='Eliminar Permisos'>
+        <IconButton onClick={onDeletePermissionsRow}>
+          <Block fontSize="small" />
+        </IconButton>
+      </Tooltip>
+      
+      <Tooltip title='Eliminar Role'>
+        <IconButton onClick={onDeleteRole}>
+          <DeleteOutline fontSize="small" />
+        </IconButton>
+      </Tooltip>
     </>
   );
 };

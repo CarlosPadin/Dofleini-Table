@@ -2,13 +2,13 @@ import { useState } from "react";
 
 import { Checkbox, Tooltip, Typography } from "@mui/material";
 
-import { deletePermissionsCol, grantPermissionsCol } from "../utils";
 import { IRole } from "../interfaces";
+import { deletePermissionsCol, grantPermissionsCol } from "../utils";
 
 interface Props {
   headerName: string;
-  field: string;
-  roles: IRole[];
+  field     : string;
+  roles     : IRole[];
 
   // Methods
   onRolesUpdate: (updatedRoles: IRole[]) => void;

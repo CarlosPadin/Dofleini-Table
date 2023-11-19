@@ -9,13 +9,13 @@ import {
 } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 
+import { RoleCell, PermissionCheckbox } from "./components";
 import { IRole } from "./interfaces";
 import { columnsProps, destruct } from "./utils";
-import { RoleCell, PermissionCheckbox } from "./components";
 
 interface Props {
-  roles: IRole[];
-  permissions: string[];
+  roles       : IRole[];
+  permissions : string[];
 }
 
 const App = ({ roles: initialRoles, permissions }: Props) => {
