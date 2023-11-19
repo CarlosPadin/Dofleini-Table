@@ -35,6 +35,6 @@ export const Permissions: string[] = [
     'PROJECT:READ',
     'STORE:WRITE',
     'STORE:READ',
-    'ACCOUNT:READ_ACCESS',
     'ACCOUNT:GRANT_ACCESS',
+    'ACCOUNT:READ_ACCESS',
 ]

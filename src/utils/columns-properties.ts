@@ -2,6 +2,7 @@ import {
   GridColDef,
   GridColumnGroupingModel,
 } from "@mui/x-data-grid";
+
 import { destruct } from ".";
 
 export const columnsModelProperties = (permissionsArray: string[]) => {
@@ -13,8 +14,7 @@ export const columnsModelProperties = (permissionsArray: string[]) => {
     let index = columnsModelProps.findIndex(
       (prop) => prop.groupId === entity.toLowerCase()
     );
-    if (index !== -1) {
-      //-1 indica que no encontro el indice
+    if (index !== -1) {                   //-1 indica que no encontro el indice
       columnsModelProps[index].children.push({
         field: permission.toLowerCase(),
       });
@@ -37,10 +37,11 @@ export const columnsProps = (permissionsArray: string[]) => {
     const { entity, permission } = destruct(permissionsArray[i]);
 
     columnsProps.push({
-      field: entity[0] + permission.toLowerCase(),
-      headerName: entity[0] + ":" + permission.toLowerCase(),
+      field: entity + permission.toLowerCase(),
+      headerName: permission,
       width: 180,
       sortable: false,
+      description: entity + ':' + permission
     });
   }
 

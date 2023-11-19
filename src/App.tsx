@@ -7,11 +7,11 @@ import {
   GridRenderCellParams,
   GridColumnHeaderParams,
 } from "@mui/x-data-grid";
-import { Box, IconButton, Typography } from "@mui/material";
-import { Block, HowToReg, RadioButtonChecked } from "@mui/icons-material";
+import { Box } from "@mui/material";
 
 import { IRole } from "./interfaces";
 import { columnsProps, destruct } from "./utils";
+import { RoleCell, PermissionCheckbox } from "./components";
 
 interface Props {
   roles: IRole[];
@@ -25,7 +25,6 @@ const App = ({ roles: initialRoles, permissions }: Props) => {
     setRoles(initialRoles);
   }, [initialRoles]);
 
-
   // --------DEFINIR FILAS--------
   const rows: GridRowsProp = roles.map((role) => {
     let row: { id: string; role: string; [key: string]: any } = {
@@ -36,7 +35,7 @@ const App = ({ roles: initialRoles, permissions }: Props) => {
     // Crear filas con nombres dinamicos
     role.permissions.forEach((perm) => {
       const { entity, permission } = destruct(perm);
-      row[entity[0] + permission.toLowerCase()] = "X";
+      row[entity + permission.toLowerCase()] = "X";
     });
 
     return row;
@@ -46,67 +45,39 @@ const App = ({ roles: initialRoles, permissions }: Props) => {
   const columns: GridColDef[] = [
     {
       field: "role",
-      headerName: "Role",
-      width: 80,
-    },
-    {
-      field: "delete",
-      headerName: "",
-      width: 50,
-      sortable: false,
+      headerName: "Roles",
+      width: 170,
       renderCell: (params: GridRenderCellParams) => {
         return (
-            <IconButton onClick={() => onDeletePermissions(params.row.id)}>
-              <Block fontSize="small"/>
-            </IconButton>
-        );
-      },
-    },
-    {
-      field: "grant",
-      headerName: "",
-      width: 50,
-      sortable: false,
-      renderCell: (params: GridRenderCellParams) => {
-        return (
-            <IconButton onClick={() => onGrantPermissions(params.row.id)}>
-              <HowToReg fontSize="small"/>
-            </IconButton>
+          <RoleCell
+            roleName={params.row.role}
+            id={params.row.id}
+            roles={roles}
+            permissions={permissions}
+            onRolesUpdate={onUpdateRoles}
+          />
         );
       },
     },
   ];
   const colProps = columnsProps(permissions);
 
-  colProps.forEach(col => {
+  colProps.forEach((col) => {
     col.renderHeader = (params: GridColumnHeaderParams) => {
-      return(
-        <>
-        <Typography variant="button">{col.headerName}</Typography>
-        <IconButton>
-          <RadioButtonChecked fontSize='small'/>
-        </IconButton>
-        </>
-      )
-    }
-  })
+      return (
+        <PermissionCheckbox
+          headerName={col.headerName!}
+          field={params.colDef.description!}
+          roles={roles}
+          onRolesUpdate={onUpdateRoles}
+        />
+      );
+    };
+  });
   columns.push(...colProps);
 
-
-  // ---------FUNCIONES DE PERMISOS----------
-  const onDeletePermissions = (id: string) => {
-    const role = roles.find((role) => role.id === id);
-      if (role) {
-        role.permissions = [];
-      }
-    setRoles([...roles]);
-  };
-  const onGrantPermissions = (id: string) => {
-      const role = roles.find((role) => role.id === id);
-      if (role) {
-        role.permissions = permissions;
-      }
-    setRoles([...roles]);
+  const onUpdateRoles = (updatedRoles: IRole[]) => {
+    setRoles([...updatedRoles]);
   };
 
   // todo: agrupar columnas
@@ -120,22 +91,15 @@ const App = ({ roles: initialRoles, permissions }: Props) => {
   // columnGroupingModel.push(...colModelProps);
 
   return (
-    <Box mt="10px" mx="10px">
+    <Box mt="20px" mx="10px">
       <div style={{ height: 500, width: "100%" }}>
         <DataGrid
           rows={rows}
           columns={columns}
           experimentalFeatures={{ columnGrouping: true }}
-          disableRowSelectionOnClick
           disableColumnMenu
           disableColumnFilter
-
-          // componentsProps={{
-          //   row: {
-          //     onMouseEnter: () => setCheckBoxAppear(true),
-          //     onMouseLeave: () => setCheckBoxAppear(false),
-          //   }
-          // }}
+          disableRowSelectionOnClick
         />
       </div>
     </Box>
