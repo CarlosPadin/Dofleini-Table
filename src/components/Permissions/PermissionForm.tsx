@@ -1,7 +1,7 @@
 import { useEffect, ChangeEvent, useState, forwardRef } from "react";
 
 import { Box, Button, Divider, TextField, Typography } from "@mui/material";
-import { destruct } from "../utils";
+import { destruct } from "../../utils";
 
 interface Props {
   permissions: string[];

@@ -6,18 +6,22 @@ import {
   GridColDef,
   GridRenderCellParams,
   GridColumnHeaderParams,
+  GridColumnGroupingModel,
+  GridColumnGroupHeaderParams,
 } from "@mui/x-data-grid";
 import { Box, Button, IconButton, Modal } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
+import './styles/globals.css';
 import {
   RoleCell,
   PermissionCell,
   PermissionForm,
   RoleForm,
+  EntityCell,
 } from "./components";
 import { IRole } from "./interfaces";
-import { columnsProps, destruct } from "./utils";
+import { columnsModelProperties, columnsProps, destruct } from "./utils";
 
 interface Props {
   roles: IRole[];
@@ -60,7 +64,7 @@ const App = ({
     {
       field: "role",
       headerName: "Roles",
-      width: 170,
+      width: 180,
       renderCell: (params: GridRenderCellParams) => {
         return (
           <RoleCell
@@ -117,19 +121,33 @@ const App = ({
     setPermissions([...updatedPermissions]);
   };
 
-  // todo: agrupar columnas
-  // const columnGroupingModel: GridColumnGroupingModel = [
-  //   {
-  //     groupId: "Roles",
-  //     headerName: '',
-  //     children: [{ field: "role" }],
-  //   },
-  // ];
-  // columnGroupingModel.push(...colModelProps);
+  // --------AGRUPAR COLUMNAS-------
+  const columnGroupingModel: GridColumnGroupingModel = [
+    {
+      groupId: "Roles",
+      headerName: "",
+      children: [{ field: "role" }],
+    },
+  ];
+  const columnsModelProps: GridColumnGroupingModel = columnsModelProperties(permissions);
+  columnsModelProps.forEach((col) => {
+    col.renderHeaderGroup = (params: GridColumnGroupHeaderParams) => {
+      return (
+        <EntityCell 
+          roles={roles}
+          permissions={permissions}
+          entity={params.headerName!}
+          onPermissionsUpdate={onUpdatePermissions}
+          onRolesUpdate={onUpdateRoles}
+          />
+      )
+    }
+  })
+  columnGroupingModel.push(...columnsModelProps!);
 
   return (
-    <Box mt="20px" mx="10px">
-      <div style={{ height: 500, width: "100%" }}>
+    <Box mt="5%" mx="10%">
+      <div style={{ height: 350, width: "100%" }}>
         <Button
           variant="contained"
           disableElevation
@@ -142,10 +160,15 @@ const App = ({
         <DataGrid
           rows={initialRows}
           columns={columns}
+          experimentalFeatures={{ columnGrouping: true }}
+          columnGroupingModel={columnGroupingModel}
           disableColumnMenu
           disableColumnFilter
           disableRowSelectionOnClick
         />
+        <Button fullWidth variant="contained" disableElevation>
+          Salvar
+        </Button>
 
         <Modal
           open={newPermissionOpen}
@@ -156,7 +179,6 @@ const App = ({
             onCloseModal={() => setNewPermissionOpen(false)}
           />
         </Modal>
-
         <Modal
           open={newRoleOpen}
           onClose={() => {

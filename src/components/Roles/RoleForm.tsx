@@ -1,7 +1,7 @@
 import { ChangeEvent, forwardRef, useEffect, useState } from "react";
 
 import { Box, Button, Divider, TextField, Typography } from "@mui/material";
-import { IRole } from "../interfaces";
+import { IRole } from "../../interfaces";
 
 interface Props {
     roles: IRole[];

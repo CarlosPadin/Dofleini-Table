@@ -1,22 +1,19 @@
-import { destruct } from "./destruct";
 import { IRole } from "../interfaces";
 
 export const deletePermissionsRow = (id: string, roles: IRole[]) => {
-
   const role = roles.find((role) => role.id === id);
   if (role) {
     role.permissions = [];
   }
-  
+
   return [...roles];
 };
 
 export const grantPermissionsRow = (
-  id: string,
-  roles: IRole[],
+  id         : string,
+  roles      : IRole[],
   permissions: string[]
 ) => {
-
   const role = roles.find((role) => role.id === id);
   if (role) {
     role.permissions = permissions;
@@ -26,12 +23,9 @@ export const grantPermissionsRow = (
 };
 
 export const deletePermissionsCol = (roles: IRole[], desc: string) => {
-
   return roles.map((role) => {
     role.permissions.forEach((perm, idx) => {
-      const { entity, permission } = destruct(perm);
-      const tempVal = entity + ":" + permission;
-      if (tempVal === desc) {
+      if (perm === desc) {
         role.permissions.splice(idx, 1);
       }
     });
@@ -41,9 +35,37 @@ export const deletePermissionsCol = (roles: IRole[], desc: string) => {
 };
 
 export const grantPermissionsCol = (roles: IRole[], desc: string) => {
-
   const updtRoles = roles.map((role) => {
     role.permissions.push(desc);
+    return role;
+  });
+
+  return updtRoles;
+};
+
+// ------ENTITIES------
+export const deletePermissionEntity = (roles: IRole[], entityName: string): IRole[] => {
+  const updRoles = roles.map((role) => {
+    return {
+      ...role,
+      permissions: role.permissions.filter((perm) => !perm.includes(entityName)),
+    };
+  });
+  return updRoles;
+  
+};
+
+export const grantPermissionEntity = (
+  roles      : IRole[],
+  permissions: string[],
+  entity     : string
+) => {
+  const newPermissons: string[] = permissions.filter((perm) =>
+    perm.includes(entity)
+  );
+
+  const updtRoles = roles.map((role) => {
+    role.permissions.push(...role.permissions, ...newPermissons);
     return role;
   });
 

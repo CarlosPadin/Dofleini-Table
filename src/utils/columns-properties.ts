@@ -2,7 +2,6 @@ import { GridColDef, GridColumnGroupingModel } from "@mui/x-data-grid";
 
 import { destruct } from ".";
 
-
 export const columnsProps = (permissionsArray: string[]) => {
   let columnsProps: GridColDef[] = [];
 
@@ -10,12 +9,12 @@ export const columnsProps = (permissionsArray: string[]) => {
     const { entity, permission } = destruct(permissionsArray[i]);
 
     columnsProps.push({
-      field      : entity + permission.toLowerCase(),
-      headerName : permission,
+      field: entity + permission.toLowerCase(),
+      headerName: permission,
       description: permissionsArray[i],
-      width      : 180,
-      sortable   : false,
-      editable   : true,
+      width: 180,
+      sortable: false,
+      editable: true,
     });
   }
 
@@ -32,15 +31,21 @@ export const columnsModelProperties = (permissionsArray: string[]) => {
       (prop) => prop.groupId === entity.toLowerCase()
     );
     if (index !== -1) {
-      //-1 indica que no encontro el indice
       columnsModelProps[index].children.push({
-        field: permission.toLowerCase(),
+        field: entity + permission.toLowerCase(),
+        description: entity + ":" + permission,
       });
     } else {
       columnsModelProps.push({
         groupId: entity.toLowerCase(),
-        headerName: entity.toLowerCase(),
-        children: [{ field: entity + permission.toLowerCase() }],
+        headerName: entity,
+        children: [
+          {
+            field: entity + permission.toLowerCase(),
+            description: entity + ":" + permission,
+          },
+        ],
+        
       });
     }
   }

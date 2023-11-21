@@ -9,8 +9,8 @@ import {
   Typography,
 } from "@mui/material";
 
-import { IRole } from "../interfaces";
-import { deletePermissionsRow, grantPermissionsRow } from "../utils";
+import { IRole } from "../../interfaces";
+import { deletePermissionsRow, grantPermissionsRow } from "../../utils";
 
 interface Props {
   roleName: string;
@@ -50,13 +50,13 @@ const RoleCell = ({
   };
 
   return (
-    <Box onMouseLeave={() => setMouseOver(false)}>
+    <Box onMouseLeave={() => setMouseOver(false)} display='flex' alignItems='center'>
       <Typography variant="body1" onMouseOver={() => setMouseOver(true)}>
         {capitalize(roleName)}
       </Typography>
 
       {mouseOver && (
-        <Box>
+        <Box className='fadeIn'>
           <Tooltip title="Dar Permisos">
             <IconButton color="primary" onClick={onGrantPermissionsRow}>
               <HowToReg fontSize="small" />
