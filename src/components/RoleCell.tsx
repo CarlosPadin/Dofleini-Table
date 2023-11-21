@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { Block, DeleteOutline, HowToReg } from "@mui/icons-material";
 import {
+  Box,
   capitalize,
   IconButton,
   Tooltip,
@@ -29,6 +30,7 @@ const RoleCell = ({
   onRolesUpdate,
 }: Props) => {
   const [checked, setChecked] = useState(false);
+  const [mouseOver, setMouseOver] = useState(false);
 
   const onDeletePermissionsRow = () => {
     setChecked(!checked);
@@ -48,27 +50,33 @@ const RoleCell = ({
   };
 
   return (
-    <>
-      <Typography variant="body1">{capitalize(roleName)}</Typography>
+    <Box onMouseLeave={() => setMouseOver(false)}>
+      <Typography variant="body1" onMouseOver={() => setMouseOver(true)}>
+        {capitalize(roleName)}
+      </Typography>
 
-      <Tooltip title='Dar Permisos'>
-        <IconButton onClick={onGrantPermissionsRow}>
-          <HowToReg fontSize="small" />
-        </IconButton>
-      </Tooltip>
+      {mouseOver && (
+        <Box>
+          <Tooltip title="Dar Permisos">
+            <IconButton color="primary" onClick={onGrantPermissionsRow}>
+              <HowToReg fontSize="small" />
+            </IconButton>
+          </Tooltip>
 
-      <Tooltip title='Eliminar Permisos'>
-        <IconButton onClick={onDeletePermissionsRow}>
-          <Block fontSize="small" />
-        </IconButton>
-      </Tooltip>
-      
-      <Tooltip title='Eliminar Role'>
-        <IconButton onClick={onDeleteRole}>
-          <DeleteOutline fontSize="small" />
-        </IconButton>
-      </Tooltip>
-    </>
+          <Tooltip title="Eliminar Permisos">
+            <IconButton onClick={onDeletePermissionsRow}>
+              <Block fontSize="small" />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title="Eliminar Role">
+            <IconButton color="error" onClick={onDeleteRole}>
+              <DeleteOutline fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      )}
+    </Box>
   );
 };
 

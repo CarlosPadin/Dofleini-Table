@@ -3,7 +3,6 @@ import { GridColDef, GridColumnGroupingModel } from "@mui/x-data-grid";
 import { destruct } from ".";
 
 
-
 export const columnsProps = (permissionsArray: string[]) => {
   let columnsProps: GridColDef[] = [];
 
@@ -11,18 +10,17 @@ export const columnsProps = (permissionsArray: string[]) => {
     const { entity, permission } = destruct(permissionsArray[i]);
 
     columnsProps.push({
-      field       : entity + permission.toLowerCase(),
-      headerName  : permission,
-      description : permissionsArray[i],
-      width       : 180,
-      sortable    : false,
+      field      : entity + permission.toLowerCase(),
+      headerName : permission,
+      description: permissionsArray[i],
+      width      : 180,
+      sortable   : false,
+      editable   : true,
     });
   }
 
   return columnsProps;
 };
-
-
 
 export const columnsModelProperties = (permissionsArray: string[]) => {
   let columnsModelProps: GridColumnGroupingModel = [];

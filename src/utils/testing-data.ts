@@ -21,7 +21,7 @@ export const Roles: IRole[] = [
     },
     {
         id: '3',
-        name: 'client',
+        name: 'manager',
         permissions: [
             'PROJECT:WRITE',
             'STORE:WRITE',
