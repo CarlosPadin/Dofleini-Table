@@ -4,5 +4,6 @@
 
 
 
-__Llamados a la API__
 __Hacer un componente aparte__
+__Ids de mongo__
+__Dar permisos en una fila__

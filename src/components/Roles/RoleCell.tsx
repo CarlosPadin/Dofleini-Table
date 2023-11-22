@@ -11,6 +11,7 @@ import {
 
 import { IRole } from "../../interfaces";
 import { deletePermissionsRow, grantPermissionsRow } from "../../utils";
+import { deleteRole } from "../../api";
 
 interface Props {
   roleName: string;
@@ -46,6 +47,7 @@ const RoleCell = ({
 
   const onDeleteRole = () => {
     const updatedRoles = roles.filter((role) => role.id !== id);
+    deleteRole(id);
     onRolesUpdate(updatedRoles);
   };
 

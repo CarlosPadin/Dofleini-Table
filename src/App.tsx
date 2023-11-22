@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   DataGrid,
@@ -22,6 +22,7 @@ import {
 } from "./components";
 import { IRole } from "./interfaces";
 import { columnsModelProperties, columnsProps, destruct } from "./utils";
+import { createRoles, updateRoles } from "./api";
 
 interface Props {
   roles: IRole[];
@@ -33,14 +34,18 @@ const App = ({
   permissions: initialPermissions,
 }: Props) => {
   const [roles, setRoles] = useState(initialRoles);
-  const [permissions, setPermissions] = useState(initialPermissions);
+  const [permissions, setPermissions] = useState([...initialPermissions].sort());
   const [newPermissionOpen, setNewPermissionOpen] = useState(false);
   const [newRoleOpen, setNewRoleOpen] = useState(false);
 
+  const hasRun = useRef(false);
+
   useEffect(() => {
-    setRoles(initialRoles);
-    setPermissions(initialPermissions.sort());
-  }, [initialRoles, initialPermissions]);
+    if (!hasRun.current) {
+      createRoles(roles);
+      hasRun.current = true;
+    }
+  }, [roles]);
 
   // --------DEFINIR FILAS--------
   const initialRows: GridRowsProp = roles.map((role) => {
@@ -145,15 +150,15 @@ const App = ({
   })
   columnGroupingModel.push(...columnsModelProps!);
 
+  const saveHandler = () => updateRoles(roles);
+
   return (
     <Box mt="5%" mx="10%">
       <div style={{ height: 350, width: "100%" }}>
         <Button
           variant="contained"
           disableElevation
-          onClick={() => {
-            setNewRoleOpen(true);
-          }}
+          onClick={() => {setNewRoleOpen(true)}}
         >
           Add Role
         </Button>
@@ -166,7 +171,12 @@ const App = ({
           disableColumnFilter
           disableRowSelectionOnClick
         />
-        <Button fullWidth variant="contained" disableElevation>
+        <Button 
+          fullWidth 
+          variant="contained" 
+          disableElevation 
+          onClick={saveHandler}
+        >
           Salvar
         </Button>
 
