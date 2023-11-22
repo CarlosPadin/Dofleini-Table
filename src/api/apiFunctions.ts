@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { IRole } from "../interfaces";
+import mongoose from "mongoose";
 
 
 const API_URL = process.env.DOFLEINI_API_URL;
@@ -18,8 +19,14 @@ export const createRoles = async (roles: IRole[]) => {
 
 export const updateRoles = async (updatedRoles: IRole[]) => {
   try {
-    // const response = await axios.put(`${API_URL}/roles`, updatedRoles);
-    console.log(updatedRoles);
+    // Convertir los IDs a IDs de MongoDB
+    const rolesWithMongoIds = updatedRoles.map(role => ({
+      ...role,
+      id: new mongoose.Types.ObjectId(role.id)
+    }));
+    
+    // const response = await axios.put(`${API_URL}/roles`, rolesWithMongoIds);
+    console.log(rolesWithMongoIds);
     // return response.data;
   } catch (error) {
     console.error("Error al actualizar los roles:", error);

@@ -2,6 +2,7 @@ import { ChangeEvent, forwardRef, useEffect, useState } from "react";
 
 import { Box, Button, Divider, TextField, Typography } from "@mui/material";
 import { IRole } from "../../interfaces";
+import mongoose from "mongoose";
 
 interface Props {
     roles: IRole[];
@@ -30,7 +31,7 @@ const RoleForm = forwardRef(({roles, permissions, onCloseModal}: Props, ref) => 
 
     if (!existingError && inputValue.length > 0) {
         roles.push({
-            id: String(Math.random()),
+            id: new mongoose.Types.ObjectId().toString(),
             name: inputValue,
             permissions: readPermissions,
         })

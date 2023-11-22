@@ -1,8 +1,10 @@
 import { IRole } from "../interfaces";
 
+const mongoose = require('mongoose');
+
 export const Roles: IRole[] = [
     {
-        id: '1',
+        id: new mongoose.Types.ObjectId().toString(),
         name: 'admin',
         permissions: [
             'PROJECT:WRITE',
@@ -11,7 +13,7 @@ export const Roles: IRole[] = [
         ]
     },
     {
-        id: '2',
+        id: new mongoose.Types.ObjectId().toString(),
         name: 'client',
         permissions: [
             'PROJECT:READ',
@@ -20,7 +22,7 @@ export const Roles: IRole[] = [
         ]
     },
     {
-        id: '3',
+        id: new mongoose.Types.ObjectId().toString(),
         name: 'manager',
         permissions: [
             'PROJECT:WRITE',

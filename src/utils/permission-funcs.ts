@@ -1,9 +1,11 @@
 import { IRole } from "../interfaces";
 
 export const deletePermissionsRow = (id: string, roles: IRole[]) => {
-  const role = roles.find((role) => role.id === id);
-  if (role) {
-    role.permissions = [];
+  const roleIndex = roles.findIndex((role) => role.id === id);
+  if (roleIndex !== -1) {
+    const roleCopy = { ...roles[roleIndex] };
+    roleCopy.permissions = [];
+    roles[roleIndex] = roleCopy;
   }
 
   return [...roles];
@@ -14,9 +16,11 @@ export const grantPermissionsRow = (
   roles      : IRole[],
   permissions: string[]
 ) => {
-  const role = roles.find((role) => role.id === id);
-  if (role) {
-    role.permissions = permissions;
+  const roleIndex = roles.findIndex((role) => role.id === id);
+  if (roleIndex !== -1) {
+    const roleCopy = { ...roles[roleIndex] };
+    roleCopy.permissions = permissions;
+    roles[roleIndex] = roleCopy;
   }
 
   return [...roles];

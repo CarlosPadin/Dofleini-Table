@@ -11,6 +11,7 @@ export const columnsProps = (permissionsArray: string[]) => {
     columnsProps.push({
       field: entity + permission.toLowerCase(),
       headerName: permission,
+      headerClassName: 'headerCell',
       description: permissionsArray[i],
       width: 180,
       sortable: false,
@@ -39,6 +40,7 @@ export const columnsModelProperties = (permissionsArray: string[]) => {
       columnsModelProps.push({
         groupId: entity.toLowerCase(),
         headerName: entity,
+        headerClassName: 'headerCell',
         children: [
           {
             field: entity + permission.toLowerCase(),
