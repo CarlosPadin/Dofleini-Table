@@ -12,6 +12,8 @@ export const columnsProps = (permissionsArray: string[]) => {
       field: entity + permission.toLowerCase(),
       headerName: permission,
       headerClassName: 'headerCell',
+      headerAlign: "center",
+      align: "center",
       description: permissionsArray[i],
       width: 180,
       sortable: false,
@@ -35,12 +37,14 @@ export const columnsModelProperties = (permissionsArray: string[]) => {
       columnsModelProps[index].children.push({
         field: entity + permission.toLowerCase(),
         description: entity + ":" + permission,
+        headerAlign: 'center',
       });
     } else {
       columnsModelProps.push({
         groupId: entity.toLowerCase(),
         headerName: entity,
         headerClassName: 'headerCell',
+        headerAlign: 'center',
         children: [
           {
             field: entity + permission.toLowerCase(),

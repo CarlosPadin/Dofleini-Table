@@ -8,9 +8,11 @@ import {
   GridColumnHeaderParams,
   GridColumnGroupingModel,
   GridColumnGroupHeaderParams,
+  GridCellParams,
 } from "@mui/x-data-grid";
 import { Box, Button, IconButton, Modal } from "@mui/material";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
+import { Close } from "@mui/icons-material";
 
 import {
   RoleCell,
@@ -58,7 +60,7 @@ const DofleiniTable = ({
     // Crear filas con nombres dinamicos
     role.permissions.forEach((perm) => {
       const { entity, permission } = destruct(perm);
-      row[entity + permission.toLowerCase()] = "X";
+      row[entity + permission.toLowerCase()] = 'X';
     });
 
     return row;
@@ -100,6 +102,12 @@ const DofleiniTable = ({
           onPermissionsUpdate={onUpdatePermissions}
         />
       );
+    };
+    col.renderCell = (params: GridCellParams) => {
+      if (params.value === 'X') {
+        return <Close color="primary" />;
+      }
+      return !params.value;
     };
   });
   columns.push(...colProps);
