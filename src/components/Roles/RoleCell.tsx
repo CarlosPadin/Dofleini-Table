@@ -52,13 +52,18 @@ const RoleCell = ({
   };
 
   return (
-    <Box onMouseLeave={() => setMouseOver(false)} display='flex' alignItems='center'>
+    <Box
+      onMouseLeave={() => setMouseOver(false)}
+      display="flex"
+      alignItems="center"
+      sx={{ cursor: "pointer"}}
+    >
       <Typography variant="body1" onMouseOver={() => setMouseOver(true)}>
         {capitalize(roleName)}
       </Typography>
 
       {mouseOver && (
-        <Box className='fadeIn'>
+        <Box className="fadeIn">
           <Tooltip title="Dar Permisos">
             <IconButton color="primary" onClick={onGrantPermissionsRow}>
               <HowToReg fontSize="small" />

@@ -1,6 +1,7 @@
 
 .headerCell {
-  background-color: lightgray;
+  background-color: rgb(238, 236, 236);
+  font-size: medium;
 }
 
 @keyframes fadeIn {

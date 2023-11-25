@@ -9,8 +9,8 @@ import {
   GridColumnGroupingModel,
   GridColumnGroupHeaderParams,
 } from "@mui/x-data-grid";
-import { Button, IconButton, Modal } from "@mui/material";
-import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
+import { Box, Button, IconButton, Modal } from "@mui/material";
+import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 
 import {
   RoleCell,
@@ -33,7 +33,9 @@ const DofleiniTable = ({
   permissions: initialPermissions,
 }: Props) => {
   const [roles, setRoles] = useState(initialRoles);
-  const [permissions, setPermissions] = useState([...initialPermissions].sort());
+  const [permissions, setPermissions] = useState(
+    [...initialPermissions].sort()
+  );
   const [newPermissionOpen, setNewPermissionOpen] = useState(false);
   const [newRoleOpen, setNewRoleOpen] = useState(false);
 
@@ -69,7 +71,7 @@ const DofleiniTable = ({
       field: "role",
       headerName: "Roles",
       width: 180,
-      headerClassName: 'headerCell',
+      headerClassName: "headerCell",
       renderCell: (params: GridRenderCellParams) => {
         return (
           <RoleCell
@@ -93,8 +95,8 @@ const DofleiniTable = ({
           headerName={col.headerName!}
           field={params.colDef.description!}
           roles={roles}
-          onRolesUpdate={onUpdateRoles}
           permissions={permissions}
+          onRolesUpdate={onUpdateRoles}
           onPermissionsUpdate={onUpdatePermissions}
         />
       );
@@ -108,7 +110,7 @@ const DofleiniTable = ({
     headerName: "",
     width: 60,
     sortable: false,
-    headerClassName: 'headerCell',
+    headerClassName: "headerCell",
     renderHeader: () => {
       return (
         <IconButton color="primary" onClick={() => setNewPermissionOpen(true)}>
@@ -135,35 +137,35 @@ const DofleiniTable = ({
       children: [{ field: "role" }],
     },
   ];
-  const columnsModelProps: GridColumnGroupingModel = columnsModelProperties(permissions);
+  const columnsModelProps: GridColumnGroupingModel =
+    columnsModelProperties(permissions);
   columnsModelProps.forEach((col) => {
     col.renderHeaderGroup = (params: GridColumnGroupHeaderParams) => {
       return (
-        <EntityCell 
+        <EntityCell
           roles={roles}
           permissions={permissions}
           entity={params.headerName!}
           onPermissionsUpdate={onUpdatePermissions}
           onRolesUpdate={onUpdateRoles}
-          />
-      )
-    }
-  })
+        />
+      );
+    };
+  });
   columnGroupingModel.push(...columnsModelProps!);
 
   const saveHandler = () => updateRoles(roles);
 
   return (
-    <>
-      <div style={{ height: 350, width: "100%" }}>
-        <Button 
-          variant="contained" 
-          disableElevation 
-          onClick={saveHandler}
-          sx={{ borderRadius: 0}}
-        >
-          Salvar
-        </Button>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+      <Button
+        variant="contained"
+        onClick={saveHandler}
+        sx={{ borderRadius: "2px", my: 1  }}
+      >
+        Salvar
+      </Button>
+      <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={initialRows}
           columns={columns}
@@ -172,48 +174,46 @@ const DofleiniTable = ({
           disableColumnMenu
           disableColumnFilter
           disableRowSelectionOnClick
-          hideFooterPagination
-          hideFooter
-          sx={{ borderRadius: 0}}
+          sx={{ borderRadius: "2px" }}
         />
-        <Button
-          variant="contained"
-          fullWidth 
-          disableElevation
-          onClick={() => {setNewRoleOpen(true)}}
-          sx={{ borderRadius: 0}}
-          startIcon={<AddCircleOutlinedIcon />}
-        >
-          Añadir Role
-        </Button>
-        
+      </Box>
+      <Button
+        variant="contained"
+        fullWidth
+        onClick={() => {
+          setNewRoleOpen(true);
+        }}
+        sx={{ borderRadius: "2px", my: 1, width: '100%' }}
+        startIcon={<AddCircleOutlinedIcon />}
+      >
+        Añadir Role
+      </Button>
 
-        {/* MODAL DE PERMISOS */}
-        <Modal
-          open={newPermissionOpen}
-          onClose={() => setNewPermissionOpen(false)}
-        >
-          <PermissionForm
-            permissions={permissions}
-            onCloseModal={() => setNewPermissionOpen(false)}
-          />
-        </Modal>
+      {/* MODAL DE PERMISOS */}
+      <Modal
+        open={newPermissionOpen}
+        onClose={() => setNewPermissionOpen(false)}
+      >
+        <PermissionForm
+          permissions={permissions}
+          onCloseModal={() => setNewPermissionOpen(false)}
+        />
+      </Modal>
 
-        {/* MODAL DE ROLES */}
-        <Modal
-          open={newRoleOpen}
-          onClose={() => {
-            setNewRoleOpen(false);
-          }}
-        >
-          <RoleForm
-            permissions={permissions}
-            roles={roles}
-            onCloseModal={() => setNewRoleOpen(false)}
-          />
-        </Modal>
-      </div>
-    </>
+      {/* MODAL DE ROLES */}
+      <Modal
+        open={newRoleOpen}
+        onClose={() => {
+          setNewRoleOpen(false);
+        }}
+      >
+        <RoleForm
+          permissions={permissions}
+          roles={roles}
+          onCloseModal={() => setNewRoleOpen(false)}
+        />
+      </Modal>
+    </Box>
   );
 };
 

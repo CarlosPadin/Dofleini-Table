@@ -49,8 +49,9 @@ const EntityCell = ({
       display="flex"
       alignItems="center"
       onMouseLeave={() => setMouseOver(false)}
+      sx={{ cursor: "pointer"}}
     >
-      <Typography variant="body2" onMouseOver={() => setMouseOver(true)}>
+      <Typography variant="body2" fontWeight='bold' onMouseOver={() => setMouseOver(true)}>
         {capitalize(entity.toLowerCase())}
       </Typography>
 

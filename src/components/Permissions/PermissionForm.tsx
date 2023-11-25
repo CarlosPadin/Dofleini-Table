@@ -104,7 +104,7 @@ const PermissionForm = forwardRef(
           variant="contained"
           onClick={onSubmitInput}
           disabled={writingError || existingError}
-          sx={{ display: "flex", justifyContent: "flex-end", ml: "87%", borderRadius: 0 }}
+          sx={{ display: "flex", justifyContent: "flex-end", ml: "87%", borderRadius: '2px' }}
         >
           OK
         </Button>
