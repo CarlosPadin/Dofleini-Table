@@ -11,8 +11,7 @@ import {
   GridCellParams,
 } from "@mui/x-data-grid";
 import { Box, Button, IconButton, Modal } from "@mui/material";
-import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
-import { Close } from "@mui/icons-material";
+import { AddCircleOutlined, Close } from "@mui/icons-material";
 
 import {
   RoleCell,
@@ -60,7 +59,7 @@ const DofleiniTable = ({
     // Crear filas con nombres dinamicos
     role.permissions.forEach((perm) => {
       const { entity, permission } = destruct(perm);
-      row[entity + permission.toLowerCase()] = 'X';
+      row[entity + permission.toLowerCase()] = "X";
     });
 
     return row;
@@ -104,7 +103,7 @@ const DofleiniTable = ({
       );
     };
     col.renderCell = (params: GridCellParams) => {
-      if (params.value === 'X') {
+      if (params.value === "X") {
         return <Close color="primary" />;
       }
       return !params.value;
@@ -122,7 +121,7 @@ const DofleiniTable = ({
     renderHeader: () => {
       return (
         <IconButton color="primary" onClick={() => setNewPermissionOpen(true)}>
-          <AddCircleOutlinedIcon fontSize="large" />
+          <AddCircleOutlined fontSize="large" />
         </IconButton>
       );
     },
@@ -165,11 +164,13 @@ const DofleiniTable = ({
   const saveHandler = () => updateRoles(roles);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+    <Box
+      sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}
+    >
       <Button
         variant="contained"
         onClick={saveHandler}
-        sx={{ borderRadius: "2px", my: 1  }}
+        sx={{ borderRadius: "2px", my: 1 }}
       >
         Salvar
       </Button>
@@ -191,8 +192,8 @@ const DofleiniTable = ({
         onClick={() => {
           setNewRoleOpen(true);
         }}
-        sx={{ borderRadius: "2px", my: 1, width: '100%' }}
-        startIcon={<AddCircleOutlinedIcon />}
+        sx={{ borderRadius: "2px", my: 1, width: "100%" }}
+        startIcon={<AddCircleOutlined />}
       >
         Añadir Role
       </Button>
