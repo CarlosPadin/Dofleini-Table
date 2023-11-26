@@ -73,14 +73,22 @@ const RoleForm = forwardRef(({roles, permissions, onCloseModal}: Props, ref) => 
         helperText={existingError && 'Ya existe este Role'}
         sx={{ mb: 1 }}
       />
-      <Button
-        variant="contained"
-        onClick={onSubmitInput}
-        disabled={existingError}
-        sx={{ display: "flex", justifyContent: "flex-end", ml: "87%", borderRadius: '2px' }}
-      >
-        OK
-      </Button>
+      <Box display='flex' flexDirection='row' justifyContent='space-between'>
+        <Button
+          variant="outlined"
+          onClick={onCloseModal}
+          disabled={existingError}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="contained"
+          onClick={onSubmitInput}
+          disabled={existingError}
+        >
+          OK
+        </Button>
+      </Box>
     </Box>
   );
 });

@@ -88,9 +88,9 @@ const PermissionForm = forwardRef(
         <Typography variant="h5" display="flex" justifyContent="center">
           Nuevo Permiso
         </Typography>
-        <Divider sx={{ mb: 2, backgroundColor: 'lightblue' }} />
+        <Divider sx={{ mb: 2, backgroundColor: "lightblue" }} />
         <TextField
-          variant="filled"
+          variant="outlined"
           autoFocus
           fullWidth
           label="Nuevo Permiso"
@@ -98,16 +98,24 @@ const PermissionForm = forwardRef(
           value={inputValue}
           onChange={onChangeHandler}
           helperText={errorName}
-          sx={{mb: 1}}
+          sx={{ mb: 1 }}
         />
-        <Button
-          variant="contained"
-          onClick={onSubmitInput}
-          disabled={writingError || existingError}
-          sx={{ display: "flex", justifyContent: "flex-end", ml: "87%", borderRadius: '2px' }}
-        >
-          OK
-        </Button>
+        <Box display='flex' flexDirection='row' justifyContent='space-between'>
+          <Button
+            variant="outlined"
+            onClick={onCloseModal}
+            disabled={existingError}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            onClick={onSubmitInput}
+            disabled={writingError || existingError}
+          >
+            OK
+          </Button>
+        </Box>
       </Box>
     );
   }
